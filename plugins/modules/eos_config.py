@@ -361,6 +361,9 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.c
     NetworkConfig,
     dumps,
 )
+from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
+    emit_warnings,
+)
 
 from ansible_collections.arista.eos.plugins.module_utils.network.eos.eos import (
     get_config,
@@ -663,8 +666,9 @@ def main():
         if "warnings" in result:
             result["warnings"].append(msg)
         else:
-            result["warnings"] = msg
+            result["warnings"] = [msg]
 
+    emit_warnings(module, result)
     module.exit_json(**result)
 
 

@@ -58,7 +58,7 @@ import json
 import re
 
 from ansible.errors import AnsibleConnectionFailure
-from ansible.module_utils.common._collections_compat import Mapping
+from collections.abc import Mapping
 from ansible.module_utils.common.text.converters import to_text
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.config import (
     NetworkConfig,

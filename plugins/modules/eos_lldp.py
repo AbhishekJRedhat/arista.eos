@@ -6,7 +6,9 @@
 
 from __future__ import absolute_import, division, print_function
 
-
+from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
+    emit_warnings,
+)
 __metaclass__ = type
 
 
@@ -110,6 +112,7 @@ def main():
         result["session_name"] = response.get("session")
         result["changed"] = True
 
+    emit_warnings(module, result)
     module.exit_json(**result)
 
 

@@ -28,7 +28,9 @@ The module file for eos_lag_interfaces
 
 from __future__ import absolute_import, division, print_function
 
-
+from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
+    emit_warnings,
+)
 __metaclass__ = type
 
 
@@ -334,6 +336,7 @@ def main():
     )
 
     result = Lag_interfaces(module).execute_module()
+    emit_warnings(module, result)
     module.exit_json(**result)
 
 
