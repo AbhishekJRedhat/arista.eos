@@ -132,6 +132,7 @@
 - name: rcf - push snapshot + RCF block via replace=config
   become: true
   register: result
+  ignore_errors: true # Adding ignore_errors:true since eos v4.24 does not support this currently, Can be removed once eos v4.28 is available in cml lab
   arista.eos.eos_config:
     src: "{{ rcf_tmpfile.path }}"
     replace: config
