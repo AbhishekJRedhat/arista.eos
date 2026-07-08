@@ -9,6 +9,8 @@ from __future__ import absolute_import, division, print_function
 from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
     emit_warnings,
 )
+
+
 __metaclass__ = type
 
 
