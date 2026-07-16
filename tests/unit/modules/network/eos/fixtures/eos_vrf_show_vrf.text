@@ -1,4 +1,3 @@
-# VRF table used by eos_vrf unit tests (text output of "show vrf")
 Maximum number of vrfs allowed: 14
   Vrf        RD          Protocols       State             Interfaces
 --------- ----------- --------------- -------------------- --------------------
