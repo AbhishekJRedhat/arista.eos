@@ -34,3 +34,19 @@ class TestEosFactsModule(TestEosModule):
         result = self.execute_module(changed=False)
         self.assertIn("ansible_facts", result)
         self.assertNotIn("warnings", result)
+
+    def test_eos_facts_available_network_resources(self):
+        set_module_args(dict(available_network_resources=True, gather_subset="min"))
+        result = self.execute_module(changed=False)
+        self.assertIn(
+            "available_network_resources",
+            result["ansible_facts"],
+        )
+        self.assertTrue(result["ansible_facts"]["available_network_resources"])
+
+    def test_eos_facts_merges_warnings(self):
+        self.get_facts.return_value = ({"ansible_net_hostname": "eos1"}, ["warn1"])
+        set_module_args(dict(gather_subset="min"))
+        result = self.execute_module(changed=False)
+        self.assertEqual(result["ansible_facts"]["ansible_net_hostname"], "eos1")
+        self.assertNotIn("warnings", result)

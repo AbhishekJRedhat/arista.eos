@@ -23,11 +23,13 @@ class TestEosLldpModule(TestEosModule):
             "ansible_collections.arista.eos.plugins.modules.eos_lldp.get_config",
         )
         self.get_config = self.mock_get_config.start()
+        self.get_config.return_value = "lldp run"
 
         self.mock_load_config = patch(
             "ansible_collections.arista.eos.plugins.modules.eos_lldp.load_config",
         )
         self.load_config = self.mock_load_config.start()
+        self.load_config.return_value = dict(diff=None, session="session")
 
     def tearDown(self):
         super(TestEosLldpModule, self).tearDown()
@@ -35,8 +37,7 @@ class TestEosLldpModule(TestEosModule):
         self.mock_load_config.stop()
 
     def load_fixtures(self, commands=None, transport="cli"):
-        self.get_config.return_value = "lldp run"
-        self.load_config.return_value = dict(diff=None, session="session")
+        pass
 
     def test_eos_lldp_present_idempotent(self):
         set_module_args(dict(state="present"))
@@ -48,3 +49,28 @@ class TestEosLldpModule(TestEosModule):
         self.get_config.return_value = "lldp run"
         set_module_args(dict(state="absent"))
         self.execute_module(changed=True, commands=["no lldp run"])
+
+    def test_eos_lldp_present_enable(self):
+        self.get_config.return_value = "no lldp run"
+        set_module_args(dict(state="present"))
+        self.execute_module(changed=True, commands=["lldp run"])
+
+    def test_eos_lldp_absent_idempotent(self):
+        self.get_config.return_value = "no lldp run"
+        set_module_args(dict(state="absent"))
+        self.execute_module(changed=False, commands=[])
+
+    def test_eos_lldp_check_mode_and_diff(self):
+        self.get_config.return_value = "no lldp run"
+        self.load_config.return_value = dict(
+            diff="+lldp run",
+            session="sess1",
+        )
+        set_module_args(
+            dict(state="present", _ansible_check_mode=True, _ansible_diff=True),
+        )
+        result = self.execute_module(changed=True)
+        self.assertEqual(result["session_name"], "sess1")
+        self.assertIn("diff", result)
+        _args, kwargs = self.load_config.call_args
+        self.assertFalse(kwargs.get("commit"))

@@ -1,0 +1,8 @@
+# VRF table used by eos_vrf unit tests (text output of "show vrf")
+Maximum number of vrfs allowed: 14
+  Vrf        RD          Protocols       State             Interfaces
+--------- ----------- --------------- -------------------- --------------------
+  mgmt       1:101       ipv4,ipv6       v4:routing,       Management1
+  test       1:100       ipv4,ipv6       v4:routing,       Ethernet5,Ethernet6,
+                                                           Ethernet7
+  blue       <not set>   ipv4            v4:no routing
