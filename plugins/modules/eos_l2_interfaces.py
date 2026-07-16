@@ -27,10 +27,6 @@ The module file for eos_l2_interfaces
 
 from __future__ import absolute_import, division, print_function
 
-from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
-    emit_warnings,
-)
-
 
 __metaclass__ = type
 
@@ -531,6 +527,9 @@ parsed:
 
 
 from ansible.module_utils.basic import AnsibleModule
+from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
+    emit_warnings,
+)
 
 from ansible_collections.arista.eos.plugins.module_utils.network.eos.argspec.l2_interfaces.l2_interfaces import (
     L2_interfacesArgs,

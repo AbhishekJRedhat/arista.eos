@@ -28,10 +28,6 @@ The module file for eos_lldp_interfaces
 
 from __future__ import absolute_import, division, print_function
 
-from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
-    emit_warnings,
-)
-
 
 __metaclass__ = type
 
@@ -311,6 +307,9 @@ commands:
 
 
 from ansible.module_utils.basic import AnsibleModule
+from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
+    emit_warnings,
+)
 
 from ansible_collections.arista.eos.plugins.module_utils.network.eos.argspec.lldp_interfaces.lldp_interfaces import (
     Lldp_interfacesArgs,
